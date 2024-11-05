@@ -13,17 +13,14 @@ function App() {
 
     // Handle receiving routine data from SubmitRoutine
     function handleRoutineSubmit(routine) {
-        //console.log(routine)
         setRoutineData(routine);
         setShowFormRoutine(false); // Hide form after submission
-        //console.log("end of handleRoutineSubmit()")
-        //console.log(routine ? "routine true!" : "routine false!")
     }
 
     return (
         <>
             <h1>Workout Record</h1>
-            <button id="add-routine-btn" onClick={handleToggleForm}>
+            <button id="add-routine-btn" type="button" onClick={handleToggleForm}>
                 Add Routine
             </button>
 
@@ -34,12 +31,17 @@ function App() {
 
             {/* Display submitted routine if routineData becomes truthy, meaning, it received
             data from SubmitRoutine.jsx */}
+            {/* 
+                WARNING:
+                ! Right now, it shows only the last routine submitted, but it should show all
+                the routines submitted, like an array, and their name and exercises
+            */}
             {routineData && (
                 <div>
                     <h2>Routine: {routineData.name}</h2>
                     <ul>
                         {routineData.exercises.map((exercise, index) => (
-                            <li key={index}>
+                            <li key={exercise.id}>
                                 {exercise.name} - {exercise.type}
                             </li>
                         ))}

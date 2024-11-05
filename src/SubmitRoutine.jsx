@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { nanoid } from "nanoid";
 import SubmitExercise from './SubmitExercise';
 
 function SubmitRoutine({ onSubmitRoutine }) {
@@ -6,7 +7,9 @@ function SubmitRoutine({ onSubmitRoutine }) {
     const [exercises, setExercises] = useState([]);
     const maxExerciseLength = 12;
 
-    // Update routine name
+    /**
+        Update routine name
+    */
     function handleRoutineNameChange(event) {
         setRoutineName(event.target.value);
     }
@@ -17,7 +20,7 @@ function SubmitRoutine({ onSubmitRoutine }) {
     function handleAddExercise() {
         // Set a max number of exercises per routine
         if (exercises.length < maxExerciseLength) {
-            setExercises(prevExercises => [...prevExercises, { name: '', type: '' }]);
+            setExercises(prevExercises => [...prevExercises, { name: '', id: nanoid(), type: '' }]);
         } else {
             alert(`You can set a maximum of ${maxExerciseLength} exercises per routine.`);
         }
@@ -32,18 +35,20 @@ function SubmitRoutine({ onSubmitRoutine }) {
         exercises array directly, a new array is created using .map(), and then React updates
         the state using setExercises.
     */
-    function handleExerciseChange(index, newExercise) {
+    function handleExerciseChange(exerciseid, newExercise) {
         console.log("=====================")
-        console.log("index: ", index);
+        console.log("id: ", exerciseid);
         console.log("newExercise: ", newExercise);
         console.log("=====================");
         const updatedExercises = exercises.slice();
-        updatedExercises[index] = newExercise;
+        updatedExercises[exerciseid] = newExercise;
         setExercises(updatedExercises);
         console.log("exercises array: ", exercises);
     };
 
-    // Handle form submission and pass routine data to parent
+    /**
+        Handle form submission and pass routine data to parent
+    */
     function handleSubmit(event) {
         event.preventDefault(); // Prevent form from reloading the page
         // We create the object routine, with its name and the exercises array
@@ -78,9 +83,8 @@ function SubmitRoutine({ onSubmitRoutine }) {
                     will be passed to SubmitExercise.jsx.
                     */
                     <SubmitExercise
-                        // biome-ignore lint/suspicious/noArrayIndexKey: <bc yolo>
-                        key={index}
-                        exerciseNumber={index + 1}
+                        key={exercise.id}
+                        exerciseNumber={index}
                         onExerciseChange={(newExercise) => handleExerciseChange(index, newExercise)
                         /* handleExerciseChange accepts two arguments, index which is the position of
                         that exercise in the exercises array, and newExercise which is the exercise object
