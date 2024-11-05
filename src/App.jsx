@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { nanoid } from "nanoid";
 import SubmitRoutine from './SubmitRoutine';
 import './App.css';
 
 function App() {
     const [showFormRoutine, setShowFormRoutine] = useState(false);
-    const [routineData, setRoutineData] = useState(null);
+    const [routines, setRoutines] = useState([]);
 
     // Toggle form visibility
     function handleToggleForm() {
@@ -12,8 +13,11 @@ function App() {
     }
 
     // Handle receiving routine data from SubmitRoutine
-    function handleRoutineSubmit(routine) {
-        setRoutineData(routine);
+    function handleRoutinesChange(routine) {
+        const updatedRoutines = routines;
+        updatedRoutines.push(routine);
+        setRoutines(updatedRoutines);
+        console.log("routines: ", routines);
         setShowFormRoutine(false); // Hide form after submission
     }
 
@@ -25,27 +29,18 @@ function App() {
             </button>
 
             {/* If showFormRoutine is truthy, the SubmitRoutine component will be displayed.
-            The attribute onSubmitRoutine={handleRoutineSubmit} is there so App.jsx can receive
+            The attribute onSubmitRoutine={handleRoutinesChange} is there so App.jsx can receive
             data from SubmitRoutine.jsx, such as routine name and the exercises data*/}
-            {showFormRoutine && <SubmitRoutine onSubmitRoutine={handleRoutineSubmit} />}
+            {showFormRoutine && <SubmitRoutine onSubmitRoutine={handleRoutinesChange} />}
 
-            {/* Display submitted routine if routineData becomes truthy, meaning, it received
-            data from SubmitRoutine.jsx */}
-            {/* 
-                WARNING:
-                ! Right now, it shows only the last routine submitted, but it should show all
-                the routines submitted, like an array, and their name and exercises
-            */}
-            {routineData && (
+            {/* Display routines if it's an initialized array*/}
+            {Array.isArray(routines) && (
                 <div>
-                    <h2>Routine: {routineData.name}</h2>
-                    <ul>
-                        {routineData.exercises.map((exercise, index) => (
-                            <li key={exercise.id}>
-                                {exercise.name} - {exercise.type}
-                            </li>
-                        ))}
-                    </ul>
+                    {routines.map((rou) => (
+                        <li key={nanoid()}>
+                            {rou.name}
+                        </li>
+                    ))}
                 </div>
             )}
         </>
@@ -53,4 +48,24 @@ function App() {
 }
 
 export default App;
+
+/*
+
+<h2>Routine: {routineData.name}</h2>
+                    <ul>
+                        {routineData.exercises.map((exercise, index) => (
+                            <li key={exercise.id}>
+                                {exercise.name} - {exercise.type}
+                            </li>
+                        ))}
+                    </ul>
+
+
+
+
+
+
+
+                    
+*/
 

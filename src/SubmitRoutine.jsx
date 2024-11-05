@@ -61,7 +61,7 @@ function SubmitRoutine({ onSubmitRoutine }) {
 
     return (
         <>
-            <form id="submit-routine-form" onSubmit={handleSubmit}>
+            <form className="submit-routine-form" onSubmit={handleSubmit}>
                 <label htmlFor="name-routine">Routine Name:</label>
                 <input
                     id="name-routine"
