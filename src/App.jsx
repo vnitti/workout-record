@@ -18,6 +18,7 @@ function App() {
         updatedRoutines.push(routine);
         setRoutines(updatedRoutines);
         console.log("routines: ", routines);
+        console.log(routine.exercises);
         setShowFormRoutine(false); // Hide form after submission
     }
 
@@ -33,12 +34,19 @@ function App() {
             data from SubmitRoutine.jsx, such as routine name and the exercises data*/}
             {showFormRoutine && <SubmitRoutine onSubmitRoutine={handleRoutinesChange} />}
 
-            {/* Display routines if it's an initialized array*/}
-            {Array.isArray(routines) && (
+            {/* Display routines if it's true*/}
+            {routines && (
                 <div>
                     {routines.map((rou) => (
-                        <li key={nanoid()}>
-                            {rou.name}
+                        <li key={nanoid()} className="routine-container">
+                            <h2>{rou.name}</h2>
+                            <div>
+                                {rou.exercises.map((exe) => (
+                                    <li key={nanoid()} className="exercise-container">
+                                        {exe.name}
+                                    </li>
+                                ))}
+                            </div>
                         </li>
                     ))}
                 </div>
@@ -48,24 +56,3 @@ function App() {
 }
 
 export default App;
-
-/*
-
-<h2>Routine: {routineData.name}</h2>
-                    <ul>
-                        {routineData.exercises.map((exercise, index) => (
-                            <li key={exercise.id}>
-                                {exercise.name} - {exercise.type}
-                            </li>
-                        ))}
-                    </ul>
-
-
-
-
-
-
-
-                    
-*/
-
