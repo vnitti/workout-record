@@ -100,6 +100,7 @@ input[type="number"] {
 }
 
 .routine,
+.routine-container,
 .submit-routine-form {
   background-color: #e7e7e7;
   padding: 0.6em;
@@ -123,4 +124,16 @@ input[type="number"] {
 h4 {
   padding: 1px;
   margin: 5px;
+}
+
+li {
+  list-style-type: none;
+}
+
+.exercise-container {
+  background-color: #bebebe;
+  padding: 0.6em;
+  margin: 1em;
+  border-radius: 10px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
 }
