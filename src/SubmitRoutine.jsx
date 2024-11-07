@@ -51,12 +51,32 @@ function SubmitRoutine({ onSubmitRoutine }) {
     */
     function handleSubmit(event) {
         event.preventDefault(); // Prevent form from reloading the page
+        
         // We create the object routine, with its name and the exercises array
         const routineData = {
             name: routineName,
             exercises: exercises
         };
-        onSubmitRoutine(routineData); // Pass the data up to the parent (App.jsx)
+        
+        /*
+        Checks if either type or name of the exercises inside routineData are empty.
+        If they are, they become truthy.
+        */
+        let hasEmptyExerciseName = routineData.exercises.some(exe => exe.name === "");
+        let hasEmptyExerciseType = routineData.exercises.some(exe => exe.type === "");
+
+        // If the name of routineData is empty, it won't let the routine to be submitted
+        if (routineData.name === "") {
+            alert("Please enter a name for your routine.");
+        } else if (hasEmptyExerciseName) {
+            alert("Please enter a name for all of your exercises.")
+        } else if (hasEmptyExerciseType){
+            alert("Please select a type for all of your exercises.")
+        } else {
+            onSubmitRoutine(routineData); // Pass the data up to the parent (App.jsx)
+        };
+        hasEmptyExerciseName = false;
+        hasEmptyExerciseType = false;
     };
 
     return (
