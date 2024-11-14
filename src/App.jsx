@@ -1,11 +1,23 @@
 import { useState } from 'react';
+/**
+ * ! It would be ideal to replace nanoid for unique identifiers for the key attributes of <li> exercises,
+ * ! that way React can avoid unnecessary re-renders.
+ */
 import { nanoid } from "nanoid";
+import { useDispatch, useSelector } from 'react-redux';
+import { addRoutine } from './redux/routineSlice';
 import SubmitRoutine from './SubmitRoutine';
 import './App.css';
 
 function App() {
     const [showFormRoutine, setShowFormRoutine] = useState(false);
-    const [routines, setRoutines] = useState([]);
+    //const [routines, setRoutines] = useState([]);
+
+    /**
+     * We access to the store, finds the routine slice and then to the routines array inside it.
+     */
+    const routines = useSelector((state) => state.routine.routines);
+    const dispatch = useDispatch(); // To be able to dispatch our routines
 
     // Toggle form visibility
     function handleToggleForm() {
@@ -14,12 +26,16 @@ function App() {
 
     // Handle receiving routine data from SubmitRoutine
     function handleRoutinesChange(routine) {
+        /*
         const updatedRoutines = routines;
         updatedRoutines.push(routine);
         setRoutines(updatedRoutines);
         console.log("routines: ", routines);
         console.log(routine.exercises);
+        */
+        dispatch(addRoutine(routine)); // Triggers the action (send the routine data to the store)
         setShowFormRoutine(false); // Hide form after submission
+        console.log("routines array: ", routines);
     }
 
     return (
@@ -28,15 +44,14 @@ function App() {
             <button id="add-routine-btn" type="button" onClick={handleToggleForm}>
                 Add Routine
             </button>
-
             {/* If showFormRoutine is truthy, the SubmitRoutine component will be displayed.
             The attribute onSubmitRoutine={handleRoutinesChange} is there so App.jsx can receive
             data from SubmitRoutine.jsx, such as routine name and the exercises data*/}
             {showFormRoutine && <SubmitRoutine onSubmitRoutine={handleRoutinesChange} />}
-
-            {/* Display routines if it's true*/}
-            {routines && (
-                <div>
+            {console.log("routines from selector: ", routines)}
+            {/* Display routines if it's an array with more than 0 positions*/}
+            {Array.isArray(routines) && routines.length > 0 && (
+                <div className="routines-list">
                     {routines.map((rou) => (
                         <li key={nanoid()} className="routine-container">
                             <h2>{rou.name}</h2>
