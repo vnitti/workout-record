@@ -12,12 +12,15 @@ import './App.css';
 function App() {
     const [showFormRoutine, setShowFormRoutine] = useState(false);
     //const [routines, setRoutines] = useState([]);
+    const addRoutineBtnName = showFormRoutine ? "Cancel" : "Add Routine";
 
     /**
      * We access to the store, finds the routine slice and then to the routines array inside it.
      */
     const routines = useSelector((state) => state.routine.routines);
     const dispatch = useDispatch(); // To be able to dispatch our routines
+
+
 
     // Toggle form visibility
     function handleToggleForm() {
@@ -41,9 +44,7 @@ function App() {
     return (
         <>
             <h1>Workout Record</h1>
-            <button id="add-routine-btn" type="button" onClick={handleToggleForm}>
-                Add Routine
-            </button>
+            
             {/* If showFormRoutine is truthy, the SubmitRoutine component will be displayed.
             The attribute onSubmitRoutine={handleRoutinesChange} is there so App.jsx can receive
             data from SubmitRoutine.jsx, such as routine name and the exercises data*/}
@@ -66,6 +67,9 @@ function App() {
                     ))}
                 </div>
             )}
+            <button id="add-routine-btn" type="button" onClick={handleToggleForm}>
+                {addRoutineBtnName}
+            </button>
         </>
     );
 }

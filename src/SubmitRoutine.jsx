@@ -15,19 +15,25 @@ function SubmitRoutine({ onSubmitRoutine }) {
     }
 
     /**  
-        Add a new exercise (object) to the exercises array
+        Add a new exercise (object) to the exercises array. We create an assign an id for each one
+        of the exercises declared here using nanoid(). The other twp properties, name and type,
+        are declared empty but will be filled with the handleExerciseChange() function.
     */
     function handleAddExercise() {
         // Set a max number of exercises per routine
         if (exercises.length < maxExerciseLength) {
-            setExercises(prevExercises => [...prevExercises, { name: '', id: nanoid(), type: '' }]);
+            setExercises(prevExercises => {
+                const updatedExercises = [...prevExercises, { name: '', id: nanoid(), type: '' }];
+                console.log("Updated exercises array: ", updatedExercises);
+                return updatedExercises;
+            });
         } else {
             alert(`You can set a maximum of ${maxExerciseLength} exercises per routine.`);
-        }
+        };
     }
 
     /** 
-        Updates every property of every exercise object inside the array exercises
+        Updates name and type properties of each of the exercise objects inside the array exercises
         every time the user changes their name or type input values. 
     */
     /*
@@ -36,13 +42,31 @@ function SubmitRoutine({ onSubmitRoutine }) {
         the state using setExercises.
     */
     function handleExerciseChange(exerciseid, newExercise) {
-        console.log("=====================")
-        console.log("id: ", exerciseid);
+        /* exerciseid is the id created in this component and assigned to each of the renderized
+        SubmitExercise components*/
+        console.log("V======================V");
+        console.log("exerciseid: ", exerciseid);
         console.log("newExercise: ", newExercise);
-        console.log("=====================");
-        const updatedExercises = exercises.slice();
-        updatedExercises[exerciseid] = newExercise;
-        setExercises(updatedExercises);
+        console.log("newExercise.name: ", newExercise.name);
+        console.log("newExercise.type: ", newExercise.type);
+        console.log("´A======================A");
+
+        /**
+         * This line takes the id of every position of the exercises array and compares it to the id of the
+         * exercise we are currently modifying (changing name or type). Once it's found, it returns the
+         * index of that exercise.
+         */
+        const exerciseIndex = exercises.findIndex(exercise => exercise.id === exerciseid);
+        console.log("exerciseIndex: ", exerciseIndex);
+
+        //We needed the previous index to know which exercise will be modified, so we can update our state.
+        const updatedExercises = [...exercises]; //we create a copy of exercises array
+        updatedExercises[exerciseIndex] = {
+            ...updatedExercises[exerciseIndex], // Mantiene las propiedades actuales (incluyendo id)
+            name: newExercise.name, // Updates the name
+            type: newExercise.type  // Updates the type
+        };
+        setExercises(updatedExercises); //then we update the state immutably
         console.log("exercises array: ", exercises);
     };
 
@@ -62,6 +86,9 @@ function SubmitRoutine({ onSubmitRoutine }) {
         Checks if either type or name of the exercises inside routineData are empty.
         If they are, they become truthy.
         */
+
+        console.log("routineData.exercises inside handleSubmit()", routineData.exercises);
+
         let hasEmptyExerciseName = routineData.exercises.some(exe => exe.name === "");
         let hasEmptyExerciseType = routineData.exercises.some(exe => exe.type === "");
 
@@ -77,6 +104,15 @@ function SubmitRoutine({ onSubmitRoutine }) {
         };
         hasEmptyExerciseName = false;
         hasEmptyExerciseType = false;
+    };
+
+    /**
+     * Deletes an exercise form in the process of submitting a new routine
+     */
+    function deleteExercise(id) {
+        console.log("id of exercise deleted: ", id)
+        const updatedExercises = exercises.filter((exe) => exe.id !== id);
+        setExercises(updatedExercises);
     };
 
     return (
@@ -95,21 +131,23 @@ function SubmitRoutine({ onSubmitRoutine }) {
 
                 {/* Render all exercises from the state.
                 In React, it's better to display things using map() instead of loops like for
-                or foreach since these are imperative and map() is declarative. Also, map is
+                or foreach since these are imperative and map() is declarative, which is
                 idiomatic- it's the way it's worked in react. */}
                 
                 {exercises.map((exercise, index) => (
-                    /* Besides key, we create other two props, exerciseNumber and onExerciseChange that
-                    will be passed to SubmitExercise.jsx.
-                    */
+                    //Besides key, we create another four props that will be passed to SubmitExercise.jsx
+                    //id is 
                     <SubmitExercise
                         key={exercise.id}
                         exerciseNumber={index}
-                        onExerciseChange={(newExercise) => handleExerciseChange(index, newExercise)
+                        onExerciseChange={(newExercise) => handleExerciseChange(exercise.id, newExercise)
                         /* handleExerciseChange accepts two arguments, index which is the position of
                         that exercise in the exercises array, and newExercise which is the exercise object
                         passed up, which contains its name and type.
-                        */}
+                        */
+                       }
+                       onDeleteExercise={() => deleteExercise(exercise.id)} //so the possibility of deleting the exercise is passed
+                       id={exercise.id}
                     />
                 ))}
                 
@@ -117,10 +155,11 @@ function SubmitRoutine({ onSubmitRoutine }) {
 
                 <br />
                 <br />
+                <br />
+                
                 {/* When the form is submitted, routine name and the exercises array are sent back
                 to App.jsx */}
                 <button type="submit">Submit Routine</button>
-                {/*console.log("exercises array: "+exercises)*/}
             </form>
         </>
     );

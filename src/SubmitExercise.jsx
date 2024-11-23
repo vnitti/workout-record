@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-function SubmitExercise({ exerciseNumber, onExerciseChange }) {
+function SubmitExercise({ exerciseNumber, onExerciseChange, onDeleteExercise, id }) {
     const [exerciseName, setExerciseName] = useState('');
     const [exerciseType, setExerciseType] = useState('');
 
-    // Handle name and type changes and pass data up to the parent
+    // Handles name and type changes and pass data up to the parent
     /* Since it is attached to the handle event onChange, these two functions will be
     triggered every time the user changes the value of the inputs of name and type of the
     exercise */
@@ -18,6 +18,10 @@ function SubmitExercise({ exerciseNumber, onExerciseChange }) {
         const newType = event.target.value;
         setExerciseType(newType);
         onExerciseChange({ name: exerciseName, type: newType });
+    }
+
+    function handleDeleteExercise() {
+        onDeleteExercise(id);
     }
 
     return (
@@ -49,6 +53,8 @@ function SubmitExercise({ exerciseNumber, onExerciseChange }) {
                 <option value="hypertrophy">Hypertrophy</option>
                 <option value="endurance">Endurance</option>
             </select>
+
+            <button type='button' className='btn-x' onClick={() => handleDeleteExercise(id)}>X</button>
             {/*console.log("exerciseName: "+exerciseName)*/}
             {/*console.log("exerciseType: "+exerciseType)*/}
         </div>

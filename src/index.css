@@ -137,3 +137,9 @@ li {
   border-radius: 10px;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
 }
+
+.btn-x {
+  background-color: rgb(255, 148, 148);
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+  color: white;
+}
