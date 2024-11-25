@@ -40,7 +40,7 @@ function App() {
     return (
         <>
             <h1>Workout Record</h1>
-            
+            <h2>v1.2</h2>
             {/* If showFormRoutine is truthy, the SubmitRoutine component will be displayed.
             The attribute onSubmitRoutine={handleRoutinesChange} is there so App.jsx can receive
             data from SubmitRoutine.jsx, such as routine name and the exercises data*/}
@@ -48,7 +48,7 @@ function App() {
             {console.log("routines from selector: ", routines)}
             {/* Display routines if it's an array with more than 0 positions*/}
             {Array.isArray(routines) && routines.length > 0 && (
-                <ul className="routines-list" key="ul-routines">
+                <ul className="routines-list" key="ul-routines"> 
                     {routines.map((rou) => (
                         <li key={nanoid()} className="routine-container">
                             <h2>{rou.name}</h2>
