@@ -40,7 +40,7 @@ function App() {
     return (
         <>
             <h1>Workout Record</h1>
-            <h2>v1.2</h2>
+            <h2>v1.3</h2>
             {/* If showFormRoutine is truthy, the SubmitRoutine component will be displayed.
             The attribute onSubmitRoutine={handleRoutinesChange} is there so App.jsx can receive
             data from SubmitRoutine.jsx, such as routine name and the exercises data*/}
