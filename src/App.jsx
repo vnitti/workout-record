@@ -1,8 +1,4 @@
 import { useState } from 'react';
-/**
- * ! It would be ideal to replace nanoid for unique identifiers for the key attributes of <li> exercises,
- * ! that way React can avoid unnecessary re-renders.
- */
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from 'react-redux';
 import { addRoutine } from './redux/routineSlice';
@@ -52,20 +48,22 @@ function App() {
             {console.log("routines from selector: ", routines)}
             {/* Display routines if it's an array with more than 0 positions*/}
             {Array.isArray(routines) && routines.length > 0 && (
-                <div className="routines-list">
+                <ul className="routines-list" key="ul-routines">
                     {routines.map((rou) => (
                         <li key={nanoid()} className="routine-container">
                             <h2>{rou.name}</h2>
-                            <div>
+                            <ul key="ul-exercises">
                                 {rou.exercises.map((exe) => (
                                     <li key={nanoid()} className="exercise-container">
-                                        {exe.name}
+                                        <span>Name: {exe.name} </span>
+                                        <span> --- </span> 
+                                        <span>Type: {exe.type}</span>
                                     </li>
                                 ))}
-                            </div>
+                            </ul>
                         </li>
                     ))}
-                </div>
+                </ul>
             )}
             <button id="add-routine-btn" type="button" onClick={handleToggleForm}>
                 {addRoutineBtnName}
