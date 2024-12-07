@@ -23,7 +23,7 @@ function SubmitRoutine({ onSubmitRoutine }) {
         // Set a max number of exercises per routine
         if (exercises.length < maxExerciseLength) {
             setExercises(prevExercises => {
-                const updatedExercises = [...prevExercises, { name: '', id: nanoid(), type: '' }];
+                const updatedExercises = [...prevExercises, { id: nanoid(), name: '', type: '', weight: '', reps: '', sets: '', notes: '' }];
                 console.log("Updated exercises array: ", updatedExercises);
                 return updatedExercises;
             });
@@ -44,13 +44,6 @@ function SubmitRoutine({ onSubmitRoutine }) {
     function handleExerciseChange(exerciseid, newExercise) {
         /* exerciseid is the id created in this component and assigned to each of the renderized
         SubmitExercise components*/
-        console.log("V======================V");
-        console.log("exerciseid: ", exerciseid);
-        console.log("newExercise: ", newExercise);
-        console.log("newExercise.name: ", newExercise.name);
-        console.log("newExercise.type: ", newExercise.type);
-        console.log("´A======================A");
-
         /**
          * This line takes the id of every position of the exercises array and compares it to the id of the
          * exercise we are currently modifying (changing name or type). Once it's found, it returns the
@@ -122,9 +115,15 @@ function SubmitRoutine({ onSubmitRoutine }) {
                 <input
                     id="name-routine"
                     type="text"
+                    
                     value={routineName}
                     onChange={handleRoutineNameChange}
+                    
                 />
+                {/*value is the value just typed in the input field. Every time this value changes,
+                handleRoutineNameChange() is triggerd, and every time it is triggered, setRoutineName() is
+                triggered, receiving the new name to be updated, and this new name is the value
+                attribute of the input. */}
 
                 <br />
                 <br />
@@ -141,9 +140,13 @@ function SubmitRoutine({ onSubmitRoutine }) {
                         key={exercise.id}
                         exerciseNumber={index}
                         onExerciseChange={(newExercise) => handleExerciseChange(exercise.id, newExercise)
-                        /* handleExerciseChange accepts two arguments, index which is the position of
-                        that exercise in the exercises array, and newExercise which is the exercise object
-                        passed up, which contains its name and type.
+                        /* Just in case: onExerciseChange is a prop passed to its child, SubmitExercise.jsx. It receives only one
+                        argument from its child, which is newExercise. handleExerciseChange() is triggered every time
+                        onExerciseChange is called in SubmitExercise.
+                        */
+                        /* handleExerciseChange accepts two arguments, exercise.id (which is already found inside SubmitRoutine.jsx)
+                        to determine the position of that exercise in the exercises array,
+                        and newExercise which is the exercise object passed up, which contains its name and type.
                         */
                        }
                        onDeleteExercise={() => deleteExercise(exercise.id)} //so the possibility of deleting the exercise is passed
@@ -159,6 +162,7 @@ function SubmitRoutine({ onSubmitRoutine }) {
                 
                 {/* When the form is submitted, routine name and the exercises array are sent back
                 to App.jsx */}
+
                 <button type="submit">Submit Routine</button>
             </form>
         </>

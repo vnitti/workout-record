@@ -132,8 +132,8 @@ li {
 
 .exercise-container {
   background-color: #bebebe;
-  padding: 0.6em;
-  margin: 1em;
+  padding: 1.2em;
+  margin: 1.2em;
   border-radius: 10px;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
 }
@@ -146,4 +146,25 @@ li {
 
 ul {
   padding: 0;
+}
+
+.exercise-data {
+  background-color: #e7e7e7;
+  border-radius: 10px;
+  font-weight: bold;
+  padding: 0.6em;
+  margin: 0.6em;
+}
+
+.exercise-name {
+  font-weight: bold;
+  padding: 0.6em;
+  margin: 0.6em;
+}
+
+.btn-add-exercise {
+  background-color: rgb(84, 200, 113);
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+  color: white;
+  font-weight: bold;
 }

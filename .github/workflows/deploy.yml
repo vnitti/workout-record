@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04 # ubuntu-lastest should be avoided
     steps:
       # 1: Checks the repository
       - name: Checkout repository
@@ -17,7 +17,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Usa la versión que prefieras de Node.js
+          node-version: '16'
 
       # 3: Install npm
       - name: Install dependencies

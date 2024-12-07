@@ -3,6 +3,7 @@ import { useState } from 'react';
 function SubmitExercise({ exerciseNumber, onExerciseChange, onDeleteExercise, id }) {
     const [exerciseName, setExerciseName] = useState('');
     const [exerciseType, setExerciseType] = useState('');
+    const [exerciseWeight, setExerciseWeight] = useState('');
 
     // Handles name and type changes and pass data up to the parent
     /* Since it is attached to the handle event onChange, these two functions will be
@@ -20,7 +21,7 @@ function SubmitExercise({ exerciseNumber, onExerciseChange, onDeleteExercise, id
         onExerciseChange({ name: exerciseName, type: newType });
     }
 
-    function handleDeleteExercise() {
+    function handleDeleteExercise(id) {
         onDeleteExercise(id);
     }
 
@@ -49,14 +50,13 @@ function SubmitExercise({ exerciseNumber, onExerciseChange, onDeleteExercise, id
                 onChange={handleTypeChange}
             >
                 <option value="" disabled>Select a type</option>
-                <option value="strength">Strength</option>
-                <option value="hypertrophy">Hypertrophy</option>
-                <option value="endurance">Endurance</option>
+                <option value="Strength (1-5 reps)">Strength (1-5 reps)</option>
+                <option value="Hypertrophy (6-12 reps)">Hypertrophy (6-12 reps)</option>
+                <option value="Standard (8-15 reps)">Standard (8-15 reps)</option>
+                <option value="Endurance (12-20 reps)">Endurance (12-20 reps)</option>
             </select>
 
             <button type='button' className='btn-x' onClick={() => handleDeleteExercise(id)}>X</button>
-            {/*console.log("exerciseName: "+exerciseName)*/}
-            {/*console.log("exerciseType: "+exerciseType)*/}
         </div>
     );
 }

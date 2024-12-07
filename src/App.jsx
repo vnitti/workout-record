@@ -32,9 +32,9 @@ function App() {
         console.log("routines: ", routines);
         console.log(routine.exercises);
         */
-        dispatch(addRoutine(routine)); // Triggers the action (send the routine data to the store)
+        dispatch(addRoutine(routine)); // Triggers the action (sends the routine data to the store)
         setShowFormRoutine(false); // Hide form after submission
-        console.log("routines array: ", routines);
+        //console.log("routines array: ", routines);
     }
 
     return (
@@ -55,12 +55,18 @@ function App() {
                             <ul key="ul-exercises">
                                 {rou.exercises.map((exe) => (
                                     <li key={nanoid()} className="exercise-container">
-                                        <span>Name: {exe.name} </span>
-                                        <span> --- </span> 
-                                        <span>Type: {exe.type}</span>
+                                        <div className='exercise-rendered'>
+                                            <span className='exercise-name'>{exe.name} </span>
+                                            <span>Type: </span><span className='exercise-data'>{exe.type}</span>
+                                            <span>Weight: </span><span className='exercise-data'></span>
+                                            <span>Reps: </span><span className='exercise-data'></span>
+                                            <span>Sets: </span><span className='exercise-data'></span>
+                                            <span>Notes: </span><span className='exercise-data'></span>
+                                        </div>
                                     </li>
                                 ))}
                             </ul>
+                            <button type="button" className='btn-add-exercise'>Add Record</button> 
                         </li>
                     ))}
                 </ul>
