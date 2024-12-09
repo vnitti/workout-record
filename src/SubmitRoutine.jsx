@@ -12,7 +12,7 @@ function SubmitRoutine({ onSubmitRoutine }) {
     */
     function handleRoutineNameChange(event) {
         setRoutineName(event.target.value);
-    }
+    };
 
     /**  
         Add a new exercise (object) to the exercises array. We create an assign an id for each one
@@ -23,14 +23,13 @@ function SubmitRoutine({ onSubmitRoutine }) {
         // Set a max number of exercises per routine
         if (exercises.length < maxExerciseLength) {
             setExercises(prevExercises => {
-                const updatedExercises = [...prevExercises, { id: nanoid(), name: '', type: '', weight: '', reps: '', sets: '', notes: '' }];
-                console.log("Updated exercises array: ", updatedExercises);
+                const updatedExercises = [...prevExercises, { id: nanoid(), name: '', type: '', weight: 0, reps: '', sets: '', notes: '' }];
                 return updatedExercises;
             });
         } else {
             alert(`You can set a maximum of ${maxExerciseLength} exercises per routine.`);
         };
-    }
+    };
 
     /** 
         Updates name and type properties of each of the exercise objects inside the array exercises
@@ -50,7 +49,6 @@ function SubmitRoutine({ onSubmitRoutine }) {
          * index of that exercise.
          */
         const exerciseIndex = exercises.findIndex(exercise => exercise.id === exerciseid);
-        console.log("exerciseIndex: ", exerciseIndex);
 
         //We needed the previous index to know which exercise will be modified, so we can update our state.
         const updatedExercises = [...exercises]; //we create a copy of exercises array
@@ -60,7 +58,6 @@ function SubmitRoutine({ onSubmitRoutine }) {
             type: newExercise.type  // Updates the type
         };
         setExercises(updatedExercises); //then we update the state immutably
-        console.log("exercises array: ", exercises);
     };
 
     /**
@@ -71,6 +68,7 @@ function SubmitRoutine({ onSubmitRoutine }) {
         
         // We create the object routine, with its name and the exercises array
         const routineData = {
+            id: nanoid(),
             name: routineName,
             exercises: exercises
         };
@@ -79,8 +77,6 @@ function SubmitRoutine({ onSubmitRoutine }) {
         Checks if either type or name of the exercises inside routineData are empty.
         If they are, they become truthy.
         */
-
-        console.log("routineData.exercises inside handleSubmit()", routineData.exercises);
 
         let hasEmptyExerciseName = routineData.exercises.some(exe => exe.name === "");
         let hasEmptyExerciseType = routineData.exercises.some(exe => exe.type === "");
@@ -103,7 +99,6 @@ function SubmitRoutine({ onSubmitRoutine }) {
      * Deletes an exercise form in the process of submitting a new routine
      */
     function deleteExercise(id) {
-        console.log("id of exercise deleted: ", id)
         const updatedExercises = exercises.filter((exe) => exe.id !== id);
         setExercises(updatedExercises);
     };
@@ -114,11 +109,9 @@ function SubmitRoutine({ onSubmitRoutine }) {
                 <label htmlFor="name-routine">Routine Name:</label>
                 <input
                     id="name-routine"
-                    type="text"
-                    
+                    type="text"                  
                     value={routineName}
-                    onChange={handleRoutineNameChange}
-                    
+                    onChange={handleRoutineNameChange}                   
                 />
                 {/*value is the value just typed in the input field. Every time this value changes,
                 handleRoutineNameChange() is triggerd, and every time it is triggered, setRoutineName() is
