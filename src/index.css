@@ -190,3 +190,12 @@ ul {
   width: 300px;
   z-index: 1001; 
 }
+
+.exercise-notes {
+  width: 100px;
+  background-color: #e7e7e7;
+  border-radius: 10px;
+  font-weight: bold;
+  padding: 0.6em;
+  margin: 0.6em;
+}

@@ -48,7 +48,7 @@ function App() {
             {showFormRoutine && <SubmitRoutine
                 onSubmitRoutine={handleRoutinesChange}
             />}
-            {/* Display routines if it's an array with more than 0 positions*/}
+            {/* Display routines if it is an array with more than 0 positions*/}
             {Array.isArray(routines) && routines.length > 0 && (
                 <ul className="routines-list" key="ul-routines"> 
                     {routines.map((rou) => (
@@ -61,9 +61,9 @@ function App() {
                                             <span className='exercise-name'>{exe.name} </span>
                                             <span>Type: </span><span className='exercise-data'>{exe.type}</span>
                                             <span>Weight: </span><span className='exercise-data'>{exe.weight}</span>
-                                            <span>Reps: </span><span className='exercise-data'>-</span>
-                                            <span>Sets: </span><span className='exercise-data'>-</span>
-                                            <span>Notes: </span><span className='exercise-data'>-</span>
+                                            <span>Reps: </span><span className='exercise-data'>{exe.reps}</span>
+                                            <span>Sets: </span><span className='exercise-data'>{exe.sets}</span>
+                                            <span>Notes: </span><span className='exercise-notes'>{exe.exeNotes}</span>
                                         </div>
                                     </li>
                                 ))}

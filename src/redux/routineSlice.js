@@ -34,11 +34,7 @@ const routineSlice = createSlice({
   reducers: { // object containing all the reducers. In this case, only one.
     // RTK automatically asigns the value of the state to the argument state, we don't have to do it manually.
     addRoutine: (state, action) => { // this reducer will be the one which updates the state of routines array.
-      console.log("type: ", action.type);
-      console.log("payload: ", action.payload);
-      console.log("initial state: ", JSON.parse(JSON.stringify(state)));
       state.routines.push(action.payload); // payload property contains the new routine to be pushed.
-      console.log("state after pushing: ", JSON.parse(JSON.stringify(state)));
     },
   },
 });

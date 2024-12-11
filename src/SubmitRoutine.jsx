@@ -23,7 +23,7 @@ function SubmitRoutine({ onSubmitRoutine }) {
         // Set a max number of exercises per routine
         if (exercises.length < maxExerciseLength) {
             setExercises(prevExercises => {
-                const updatedExercises = [...prevExercises, { id: nanoid(), name: '', type: '', weight: 0, reps: '', sets: '', notes: '' }];
+                const updatedExercises = [...prevExercises, { id: nanoid(), name: '', type: '', weight: 0, reps: 0, sets: 0, exeNotes: '' }];
                 return updatedExercises;
             });
         } else {
@@ -55,7 +55,11 @@ function SubmitRoutine({ onSubmitRoutine }) {
         updatedExercises[exerciseIndex] = {
             ...updatedExercises[exerciseIndex], // Mantiene las propiedades actuales (incluyendo id)
             name: newExercise.name, // Updates the name
-            type: newExercise.type  // Updates the type
+            type: newExercise.type, // Updates the type
+            sets: newExercise.sets,
+            weight: newExercise.weight,
+            reps: newExercise.reps,
+            exeNotes: newExercise.exeNotes,
         };
         setExercises(updatedExercises); //then we update the state immutably
     };
